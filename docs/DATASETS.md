@@ -15,6 +15,7 @@ If you have some datasets already installed somewhere else, you can create symbo
 Datasets list:
 - [ImageNet](#imagenet)
 - [Caltech101](#caltech101)
+- [CIFAR-10](#cifar-10)
 - [OxfordPets](#oxfordpets)
 - [StanfordCars](#stanfordcars)
 - [Flowers102](#flowers102)
@@ -228,4 +229,27 @@ The directory structure should look like
 imagenet-rendition/
 |–– imagenet-r/ # contains 200 folders whose names have the format of n*
 |–– classnames.txt
+```
+
+### CIFAR-10
+- Create a folder named `cifar-10/` under `$DATA`. This folder will be used by the dataset script to store CIFAR-10 images.
+- The first time you run a script using CIFAR-10, the `torchvision.datasets.CIFAR10` class will automatically download the dataset if it's not found in `$DATA/cifar-10/`.
+- The dataset script will then process and save the images into `$DATA/cifar-10/images/class_name/image_name.png` for consistent use with the framework.
+- Pre-generated split files (`train.pkl`, `val.pkl`, `test.pkl`) and few-shot split files will also be saved in `$DATA/cifar-10/splits/` by the script to speed up subsequent loads.
+
+The expected directory structure after running a script with CIFAR-10 once will be:
+```
+$DATA/
+|–– cifar-10/
+|   |–– cifar-10-python.tar.gz  # Downloaded by torchvision (or similar, actual name might vary)
+|   |–– images/                 # Created by our script
+|   |   |–– airplane/
+|   |   |–– automobile/
+|   |   |–– ... (other classes)
+|   |–– splits/                 # Created by our script
+|   |   |–– train.pkl
+|   |   |–– val.pkl
+|   |   |–– test.pkl
+|   |   |–– shot_1-seed_1.pkl   # Example few-shot split
+|–– ... (other datasets)
 ```
